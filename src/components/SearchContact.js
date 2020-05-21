@@ -6,12 +6,16 @@ export default class SearchContacts extends React.Component {
     constructor(props){
         super(props)
         this.buttonPressed = this.buttonPressed.bind(this)
-        this.state = {}
+        this.state = {
+            jsonContact : ''
+        }
     }
 
-    buttonPressed(){
-        this.state.id
-        this.props.onSubmit(this.state.id)
+    async buttonPressed(){
+        await getContact(this.state.id).then(response => {
+            this.state.jsonContact = response
+        })
+        this.props.onSubmit(this.state.jsonContact)
     }
     render() {
         return (

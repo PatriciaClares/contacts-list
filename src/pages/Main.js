@@ -1,27 +1,23 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import SearchContacts from '../components/SearchContacts';
+import SearchContact from '../components/SearchContact';
 import getContact from '../service/api'
 
 export default class Main extends React.Component {
     state = {
-        contacts: ''
-    }
-
+        contact: ''
+    }    
+    onSearchSubmit = (jsonContact) =>{
+        this.setState.contact = jsonContact
+    }   
     render(){
         return (
             <View style={styles.container}>
-                <SearchContacts onSubmit={this.onSearchSubmit} />
-                <Text>{this.state.contacts}</Text>
+                <SearchContact onSubmit={this.onSearchSubmit} />
+                <Text>{this.state.contact.email}</Text>
             </View>
         );
     }
-    onSearchSubmit = (IdText) =>{
-        getContact(IdText).then(response => {
-            this.state.contacts = response
-        })
-        console.log(this.state.contacts)
-    }   
 }
 
 const styles = StyleSheet.create({
