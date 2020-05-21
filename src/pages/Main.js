@@ -1,10 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SearchContacts from '../components/SearchContacts';
+import getContact from '../service/api'
 
 export default class Main extends React.Component {
     state = {
-        id:'',
         contacts: ''
     }
 
@@ -12,12 +12,15 @@ export default class Main extends React.Component {
         return (
             <View style={styles.container}>
                 <SearchContacts onSubmit={this.onSearchSubmit} />
-                <Text>{this.state.id}</Text>
+                <Text>{this.state.contacts}</Text>
             </View>
         );
     }
     onSearchSubmit = (IdText) =>{
-        this.setState({id: IdText})
+        getContact(IdText).then(data => {
+            this.state.contacts = data
+        })
+        console.log(this.state.contacts)
     }   
 }
 
