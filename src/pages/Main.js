@@ -17,8 +17,8 @@ export default class Main extends React.Component {
         );
     }
     onSearchSubmit = (IdText) =>{
-        getContact(IdText).then(data => {
-            this.state.contacts = data
+        getContact(IdText).then(response => {
+            this.state.contacts = response
         })
         console.log(this.state.contacts)
     }   
