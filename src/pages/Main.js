@@ -1,23 +1,54 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Text, View, StyleSheet,FlatList,SafeAreaView,TouchableHighlight, Image} from 'react-native';
 import SearchContact from '../components/SearchContact';
-import getContact from '../service/api'
+import {getContacts} from '../service/api'
+import ContactModal from '../components/ContactModal';
+import SearchContacts from '../components/SearchContact';
+import Contact from '../components/Contact';
 
 export default class Main extends React.Component {
-    state = {
-        contact: ''
-    }    
-    onSearchSubmit = (jsonContact) =>{
-        this.setState.contact = jsonContact
-    }   
+
+    constructor(props){
+        super(props)
+
+        this.state = {
+            page : 1
+        }    
+    }
+
     render(){
         return (
-            <View style={styles.container}>
-                <SearchContact onSubmit={this.onSearchSubmit} />
-                <Text>{this.state.contact.email}</Text>
-            </View>
+            <SafeAreaView style={styles.container}>
+                <SearchContacts />
+                
+                <FlatList
+                    data={this.state.contacts}
+                    renderItem={
+                        ({item}) =>             
+                            <this.Item item={item}/>
+                    }
+                />
+            </SafeAreaView>
         );
     }
+
+    componentDidMount(){
+        this.contacts();
+     }
+ 
+     async contacts(){
+         await getContacts(this.state.page).then(response => {
+             this.setState({contacts: response.data});
+         });
+ 
+     }
+ 
+     Item(contact){
+         return(
+             <Text>{contact.item.email} Ola</Text>
+         )
+     } 
+
 }
 
 const styles = StyleSheet.create({
@@ -26,6 +57,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
+  item: {
+    borderColor: 'black',
+    borderWidth: 2,
+    padding: 20,
+  }
 });
-
-

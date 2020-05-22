@@ -1,22 +1,28 @@
 import React from 'react'
 import { View, Text, TextInput, Button } from 'react-native'
+import {getContact} from '../service/api'
+import Contact from './Contact'
 
 export default class SearchContacts extends React.Component {
     
     constructor(props){
         super(props)
-        this.buttonPressed = this.buttonPressed.bind(this)
+        
         this.state = {
+            id: '', 
             jsonContact : ''
         }
+        
+        this.buttonPressed = this.buttonPressed.bind(this)
     }
 
     async buttonPressed(){
         await getContact(this.state.id).then(response => {
-            this.state.jsonContact = response
+            this.state.jsonContact = response.data
         })
-        this.props.onSubmit(this.state.jsonContact)
+        console.log(this.state.jsonContact)
     }
+
     render() {
         return (
             <View>
@@ -31,6 +37,7 @@ export default class SearchContacts extends React.Component {
                         title='BUSCAR'
                         onPress={this.buttonPressed}
                     />
+                    
                 </View>
             </View>
         )
