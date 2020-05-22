@@ -1,10 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet,FlatList,SafeAreaView,TouchableHighlight, Image} from 'react-native';
-import SearchContact from '../components/SearchContact';
+import { Button, StyleSheet,FlatList,SafeAreaView,TouchableHighlight, Image, View} from 'react-native';
 import {getContacts} from '../service/api'
 import ContactModal from '../components/ContactModal';
 import SearchContacts from '../components/SearchContact';
-import Contact from '../components/Contact';
 
 export default class Main extends React.Component {
 
@@ -25,9 +23,23 @@ export default class Main extends React.Component {
                     data={this.state.contacts}
                     renderItem={
                         ({item}) =>             
-                            <this.Item item={item}/>
+                            <ContactModal contact={item}/>
                     }
                 />
+                <View style={{flexDirection:"row"}}>
+                    <Button title='1' onPress={() => {
+                        if(this.state.page != 1){
+                            this.state.page = 1
+                            this.contacts()
+                        }
+                    }} />
+                    <Button title='2' onPress={() => {
+                        if(this.state.page != 2){
+                            this.state.page = 2
+                            this.contacts()
+                        }
+                    }}/>
+                </View>
             </SafeAreaView>
         );
     }
@@ -42,24 +54,14 @@ export default class Main extends React.Component {
          });
  
      }
- 
-     Item(contact){
-         return(
-             <Text>{contact.item.email} Ola</Text>
-         )
-     } 
 
 }
 
 const styles = StyleSheet.create({
   container: {
+    padding: 10,
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
   },
-  item: {
-    borderColor: 'black',
-    borderWidth: 2,
-    padding: 20,
-  }
+
 });

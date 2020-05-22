@@ -1,45 +1,49 @@
 import React from 'react'
-import { View, Text, TextInput, Button } from 'react-native'
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 import {getContact} from '../service/api'
 import Contact from './Contact'
 
 export default class SearchContacts extends React.Component {
-    
-    constructor(props){
-        super(props)
-        
-        this.state = {
-            id: '', 
-            jsonContact : ''
-        }
-        
-        this.buttonPressed = this.buttonPressed.bind(this)
-    }
 
-    async buttonPressed(){
-        await getContact(this.state.id).then(response => {
+        state = {
+            showContact: false,
+            jsonContact : '',
+        }
+
+    async buttonPressed(valor){
+        await getContact(valor).then(response => {
             this.state.jsonContact = response.data
-        })
-        console.log(this.state.jsonContact)
+        });
+        this.setState({showContact : true})
     }
 
     render() {
+        let id = ''
         return (
-            <View>
-                <Text>Procure um contato por ID</Text>
-                <View>
-                    <TextInput 
-                        placeholder= "Digite aqui seu id"
-                        clearButtonMode = "always"
-                        onChangeText={value => this.setState({id:value})}
+            <View style={styles.container}>
+                <View >
+                    <View>
+                        <Text>Procure um contato por ID</Text>
+                        <TextInput 
+                            placeholder= "Digite aqui seu id"
+                            clearButtonMode = "always"
+                            onChangeText={value => id = value}
+                            />
+                    </View>
+                        <Button 
+                            title='BUSCAR'
+                            onPress={() => {
+                                this.buttonPressed(id)
+                            }}
                         />
-                    <Button 
-                        title='BUSCAR'
-                        onPress={this.buttonPressed}
-                    />
-                    
                 </View>
+               {this.state.showContact? <Contact contact={this.state.jsonContact}/> : null}
             </View>
         )
     }
 }
+const styles = StyleSheet.create({
+    container : {
+        backgroundColor : "red"
+    }
+})
