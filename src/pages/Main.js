@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, StyleSheet,FlatList,SafeAreaView,TouchableHighlight, Image, View} from 'react-native';
+import { TouchableOpacity, StyleSheet,FlatList,SafeAreaView,Text, View} from 'react-native';
 import {getContacts} from '../service/api'
-import ContactModal from '../components/ContactModal';
-import SearchContacts from '../components/SearchContact';
+import ContactModal from '../components/tarefa_2/ContactModal';
+import SearchContacts from '../components/tarefa_1/SearchContact';
 
 export default class Main extends React.Component {
 
@@ -18,27 +18,33 @@ export default class Main extends React.Component {
         return (
             <SafeAreaView style={styles.container}>
                 <SearchContacts />
-                
-                <FlatList
-                    data={this.state.contacts}
-                    renderItem={
-                        ({item}) =>             
-                            <ContactModal contact={item}/>
-                    }
-                />
-                <View style={{flexDirection:"row"}}>
-                    <Button title='1' onPress={() => {
-                        if(this.state.page != 1){
-                            this.state.page = 1
-                            this.contacts()
+                <Text style={{fontSize: 20, marginTop:10, marginBottom:20}}>Todos os Contatos:</Text>
+                <View>
+                    <FlatList
+                        data={this.state.contacts}
+                        renderItem={
+                            ({item}) =>             
+                                <ContactModal contact={item}/>
                         }
-                    }} />
-                    <Button title='2' onPress={() => {
-                        if(this.state.page != 2){
-                            this.state.page = 2
-                            this.contacts()
-                        }
-                    }}/>
+                    />
+                    <View style={styles.page}>
+                        <TouchableOpacity
+                            style={styles.pageButton}
+                            onPress={() => {
+                                if(this.state.page != 1){
+                                    this.state.page = 1
+                                    this.contacts()
+                            }
+                        }}><Text style={{color:'white'}}>Pagina 1</Text></TouchableOpacity>
+                        <TouchableOpacity 
+                            style={styles.pageButton}
+                            onPress={() => {
+                                if(this.state.page != 2){
+                                    this.state.page = 2
+                                    this.contacts()
+                                }
+                        }}><Text style={{color:'white'}}>Pagina 2</Text></TouchableOpacity>
+                    </View>
                 </View>
             </SafeAreaView>
         );
@@ -59,9 +65,27 @@ export default class Main extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    flex: 1,
+    flex:1,
+    paddingLeft:20,
+    paddingRight:20,
+    justifyContent:'center',
     backgroundColor: '#fff',
+    justifyContent:'flex-start'
   },
+  page:{
+    flexDirection:"row", 
+    justifyContent:"center"
+    
+  },
+  pageButton:{
+    borderRadius: 10,
+    backgroundColor: '#ef4c66',
+    padding: 5,
+    margin: 2,
+    height: 30,
+    width: 70,
+    alignItems: "center",
+    justifyContent: "center",
+  }
 
 });
