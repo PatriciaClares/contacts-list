@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet,FlatList,SafeAreaView,Text, View} from 'react-native';
 import {getContacts} from '../service/api'
-import ContactModal from '../components/tarefa_2/ContactModal';
-import SearchContacts from '../components/tarefa_1/SearchContact';
+import ContactModal from '../components/ContactModal';
+import SearchContacts from '../components/SearchContact';
 
 export default class Main extends React.Component {
 

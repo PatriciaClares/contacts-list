@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import {getContact} from '../../service/api'
-import Contact from '../tarefa_1/Contact'
+import {getContact} from '../service/api'
+import Contact from './/Contact'
 
 export default class SearchContacts extends React.Component {
 
